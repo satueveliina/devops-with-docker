@@ -1,0 +1,12 @@
+$ docker run -d --name ex1-4 devopsdockeruh/exec_bash_exercise
+36f64889772bb86bab901d3c8311936812c10cad4b9d182695894f678650b959
+
+$ docker ps
+CONTAINER ID        IMAGE                               COMMAND             CREATED             STATUS              PORTS               NAMES
+36f64889772b        devopsdockeruh/exec_bash_exercise   "node index"        6 seconds ago       Up 4 seconds                            ex1-4
+
+$ docker exec -it ex1-4 bash
+root@36f64889772b:/usr/app# tail -f ./logs.txt
+Mon, 30 Dec 2019 15:51:36 GMT
+Secret message is:
+"Docker is easy"
