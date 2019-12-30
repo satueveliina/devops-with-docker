@@ -1,0 +1,7 @@
+(base) satusalekari@Satu-MacBook-Pro DWD (master) $ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+(base) satusalekari@Satu-MacBook-Pro DWD (master) $
+
+(base) satusalekari@Satu-MacBook-Pro DWD (master) $ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+(base) satusalekari@Satu-MacBook-Pro DWD (master) $
