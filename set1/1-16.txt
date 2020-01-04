@@ -1,0 +1,7 @@
+docker pull devopsdockeruh/heroku-example
+heroku container:login
+docker tag devopsdockeruh/heroku-example registry.heroku.com/satu-devopsdocker/web
+docker push registry.heroku.com/satu-devopsdocker/web
+heroku container:release web -a satu-devopsdocker
+
+https://satu-devopsdocker.herokuapp.com/
