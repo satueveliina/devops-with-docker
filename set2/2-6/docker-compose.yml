@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+    backend:
+      build: ../../set1/1-12/backend-example-docker/
+      container_name: backend
+      ports:
+        - "8000:8000"
+      networks:
+        - backend-network
+      environment:
+        - REDIS=redis
+        - DB_USERNAME=postgres
+        - DB_HOST=postgres
+        - DB_PASSWORD=postgres-password
+      depends_on:
+        - postgres
+    frontend:
+      build: ../../set1/1-12/frontend-example-docker/
+      container_name: frontend
+      ports:
+        - "5000:5000"
+    redis:
+      image: redis
+      networks:
+        - backend-network
+    postgres:
+      image: postgres
+      restart: unless-stopped
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGES_PASSWORD=postgres-password
+      container_name: postgres
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      networks:
+        - backend-network
+      ports:
+        - "5432:5432"
+networks:
+  backend-network:
+    name: backend-network
+volumes:
+  pgdata:
+  files:

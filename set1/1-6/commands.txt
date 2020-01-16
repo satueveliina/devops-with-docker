@@ -1,2 +1,0 @@
-$ cd 1-6/
-$ docker build -t myfirst .
