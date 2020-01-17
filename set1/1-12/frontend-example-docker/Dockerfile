@@ -11,5 +11,6 @@ COPY . /app
 RUN apt-get update && apt-get install -y curl
 RUN npm install
 EXPOSE 5000
-ENV API_URL=http://localhost:8000
+ARG api_url=http://localhost:8000
+ENV API_URL=${api_url}
 CMD ["npm", "start"]

@@ -11,5 +11,6 @@ COPY . /app
 RUN apt-get update && apt-get install -y curl
 RUN npm install
 EXPOSE 8000
-ENV FRONT_URL=http://localhost:5000
+ARG front_url=http://localhost:5000
+ENV FRONT_URL=${front_url}
 CMD ["npm", "start"]

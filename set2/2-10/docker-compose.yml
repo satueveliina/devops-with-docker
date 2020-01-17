@@ -1,0 +1,80 @@
+// SOLUTION DESCRIPTION:
+// I made it possible to override the env variables API_URL and FRONT_URL in frontend and backend Dockerfiles
+// through arguments passed from the docker-compose file
+// I then passed the url of the proxy (localhost:3000) for as the domain for both of these.
+// all the buttons then work at http://localhost:3000
+version: '3.7'
+
+services:
+    proxy:
+      image: jwilder/nginx-proxy
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+        - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      depends_on:
+        - frontend
+      networks:
+        - site-network
+      ports:
+        - "3000:3000"
+
+    frontend:
+      build:
+        context: ../../set1/1-12/frontend-example-docker/
+        args:
+          - api_url=http://localhost:3000/api
+
+      container_name: frontend
+      ports:
+        - "5000:5000"
+      depends_on:
+        - backend
+      networks:
+        - site-network
+
+    backend:
+      build:
+        context: ../../set1/1-12/backend-example-docker/
+        args:
+          - front_url=http://localhost:3000/api
+      container_name: backend
+      ports:
+        - "8000:8000"
+      networks:
+        - site-network
+      environment:
+        - REDIS=redis
+        - DB_USERNAME=postgres
+        - DB_HOST=postgres
+        - DB_PASSWORD=postgres-password
+
+      depends_on:
+        - redis
+        - postgres
+
+    redis:
+      image: redis
+      networks:
+        - site-network
+
+    postgres:
+      image: postgres
+      restart: unless-stopped
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGES_PASSWORD=postgres-password
+      container_name: postgres
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      networks:
+        - site-network
+      ports:
+        - "5432:5432"
+
+networks:
+  site-network:
+    name: site-network
+
+volumes:
+  pgdata:
+  files:
