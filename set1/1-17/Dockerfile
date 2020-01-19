@@ -12,4 +12,4 @@ ARG name=gatsby-site
 RUN gatsby new ${name}
 WORKDIR ${name}
 EXPOSE 8000
-CMD ["gatsby", "develop"]
+CMD ["gatsby", "develop", "--host=0.0.0.0"]
